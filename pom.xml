@@ -1,15 +1,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>OPTwitchData</groupId>
+  <groupId>tv.opg</groupId>
   <artifactId>OPTwitchData</artifactId>
   <packaging>jar</packaging>
   <version>1.0-SNAPSHOT</version>
-  <name>OPTwitchData</name>
   <properties>
 		<jdk.version>1.8</jdk.version>
   </properties>
   <build>
-    <finalName>OPTwitchData</finalName>
     <sourceDirectory>src</sourceDirectory>
     <plugins>
       <plugin>
