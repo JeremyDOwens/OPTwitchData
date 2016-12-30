@@ -93,9 +93,12 @@ public class Broadcast {
      * @return int The amount of time in minutes
      */
     public int getLength() {
-    	//The initial project used snapshots 6 minutes apart, but this method is designed to work with any frequency.
-    	int l = (int)(getEnd().getTime()-getStart().getTime())/60000; //Difference between snapshots in minutes.
-    	return l + l/(snapshots.size()-1);                            //Difference plus the average difference between snapshots 	
+    	if (snapshots.size() > 1) {
+    		//The initial project used snapshots 6 minutes apart, but this method is designed to work with any frequency.
+    		int l = (int)(getEnd().getTime()-getStart().getTime())/60000; //Difference between snapshots in minutes.
+        	return l + l/(snapshots.size()-1); //Difference plus the average difference between snapshots
+    	  }   
+    	else return 0;
     }
     
     /**
