@@ -270,7 +270,7 @@ public class Broadcast {
      * @return
      */
     public int getRampUp() {
-    	if (this.getLength() <= 30) { //If stream is less than or equal to 30 minutes long, return the last viewer count.
+    	if (this.getLength() <= 24) { //If stream is less than or equal to 30 minutes long, return the last viewer count.
     		return (int) snapshots.last().VIEWERS;
     	}
     	//Otherwise, iterate through the snapshots, and the capture the VIEWER value of the first one that occurs 29
@@ -278,7 +278,10 @@ public class Broadcast {
     	else {                       
     		int ramp = 0;
     		for (StreamSnapshot ss: snapshots) {
-    			if ((ss.TIME.getTime() - snapshots.first().TIME.getTime())/60000 > 29) ramp =- (int) ss.VIEWERS;
+    			if ((ss.TIME.getTime() - snapshots.first().TIME.getTime())/60000 > 29) {
+    				ramp = (int) ss.VIEWERS;
+    				break;
+    			}
     		}
     		return ramp;
     	}
