@@ -211,7 +211,12 @@ public class Broadcast {
     	double[] slopes = new double[gameSplits.size()]; //Instantiate array to be returned.
     	int i = 0;
     	for (StreamSnapshot[] sArr: gameSplits) {
-    		SortedSet<StreamSnapshot> set = snapshots.subSet(sArr[0], sArr[1]);
+    		SortedSet<StreamSnapshot> set = null;
+    		try {
+    			set = snapshots.subSet(sArr[0], sArr[1]);
+    		} catch (Exception e) {
+    			continue;
+    		}
     		if (set.size() < 2) { 
     			//If there is only one snapshot in the subset, set the value in the array to 0.0 and increment i.
     			slopes[i++] = 0.0;
