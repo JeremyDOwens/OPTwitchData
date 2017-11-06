@@ -50,6 +50,10 @@ public class StreamSnapshot  implements Comparable<StreamSnapshot> {
 		this.FOLLOWERS = followers;
 	}
 	
+	public String getCSV() {
+		return this.CHANNEL + "," + this.TIME + "," + this.GAME + "," + this.VIEWERS + "," + this.FOLLOWERS;
+	}
+	
 	@Override
 	public int compareTo(StreamSnapshot o) {
 		return (int)(this.TIME.getTime() - o.TIME.getTime());

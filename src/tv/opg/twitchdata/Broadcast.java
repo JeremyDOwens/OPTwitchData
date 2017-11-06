@@ -17,6 +17,7 @@ package tv.opg.twitchdata;
 
 import java.sql.Timestamp; //All time elements stored in the format to facilitate interaction with relational databases
 import java.util.ArrayList; //Used for sorting
+import java.util.List;
 import java.util.SortedSet; //Parent of TreeSet
 import java.util.TreeSet; //Used to store ordered StreamSnapshot elements
 import org.apache.commons.math3.stat.regression.SimpleRegression; //Required to calculate the Subsequent Game Slope
@@ -71,20 +72,20 @@ public class Broadcast {
     }
     
     /**
-     * Getter for the time at which the first StreamSnapshot was captured. 
+     * Getter for the first StreamSnapshot that was captured. 
      * 
-     * @return java.sql.Timestamp 
+     * @return StreamSnapshot 
      */
-    public Timestamp getStart() {
-    	return snapshots.first().TIME;  //Access public final member in the first StreamSnapshot in the TreeSet and return it.
+    public StreamSnapshot getStart() {
+    	return snapshots.first();  //Access public final member in the first StreamSnapshot in the TreeSet and return it.
     }
     
     /**
-     * Getter for the time at which the last StreamSnapshot was captured.
-     * @return java.sql.Timestamp
+     * Getter for the last StreamSnapshot that was captured.
+     * @return StreamSnapshot
      */
-    public Timestamp getEnd() {
-    	return snapshots.last().TIME;  //Access public final member in the last StreamSnapshot in the TreeSet and return it.
+    public StreamSnapshot getEnd() {
+    	return snapshots.last();  //Access public final member in the last StreamSnapshot in the TreeSet and return it.
     }
     
     /**
@@ -95,7 +96,7 @@ public class Broadcast {
     public int getLength() {
     	if (snapshots.size() > 1) {
     		//The initial project used snapshots 6 minutes apart, but this method is designed to work with any frequency.
-    		int l = (int)(getEnd().getTime()-getStart().getTime())/60000; //Difference between snapshots in minutes.
+    		int l = (int)(getEnd().TIME.getTime()-getStart().TIME.getTime())/60000; //Difference between snapshots in minutes.
         	return l + l/(snapshots.size()-1); //Difference plus the average difference between snapshots
     	  }   
     	else return 0;
@@ -291,6 +292,12 @@ public class Broadcast {
     		return ramp;
     	}
  
+    }
+    
+    public String getSnapCSV() {
+    	StringBuilder builder = new StringBuilder("channel,timestamp,game,viewers,followers\n");
+    	snapshots.forEach(snap -> builder.append(snap.getCSV() + "\n"));
+    	return builder.toString();
     }
     
     @Override
